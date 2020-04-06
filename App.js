@@ -19,17 +19,18 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)
 
   if(!fontLoaded) {
+    console.log('not loaded')
     return (
       <AppLoading 
         startAsync={fetchFonts} 
         onFinish={() => setFontLoaded(true)}
       />
     )
-  }
-
-  return (
-    <MealsNavigator />
-  );
+  } 
+  
+  return <MealsNavigator />
+  
+  
 }
 
 const styles = StyleSheet.create({
