@@ -119,12 +119,29 @@ const FiltersNavigator = createStackNavigator({
     Filters: {
         screen: FiltersScreen,
     }
+}, {
+    defaultNavigationOptions: defaultStackNavOptions
 })
 
 // MAIN DRAWER NAVIGATION
 const MainNavigator = createDrawerNavigator({
-    MealsFav: MealsFavTabNavigator,
-    Filters: FiltersNavigator
+    MealsFav: {
+        screen: MealsFavTabNavigator,
+        navigationOptions: {
+            drawerLabel: 'Meals'
+        }
+    },
+    Filters: {
+        screen: FiltersNavigator
+    },
+}, {
+    // drawerBackgroundColor: 'rgba(255,64,129,0.4)',
+    contentOptions: {
+        activeTintColor: 'magenta',
+        labelStyle: {
+            fontFamily: 'open-sans-bold'
+        }
+    }
 })
 
 
