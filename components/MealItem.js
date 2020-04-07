@@ -9,6 +9,7 @@ import {
     ImageBackground 
 } from 'react-native'
 
+import DefaultText from '../components/DefaultText'
 import Colors from '../constants/Colors'
 
 const MealItem = props => {
@@ -29,9 +30,9 @@ const MealItem = props => {
                     </View>
 
                     <View style={{...styles.mealRow, ...styles.mealDetail, backgroundColor: props.primaryColor || props.favColor}}>
-                        <Text style={styles.detailText}>{props.duration}m</Text>
-                        <Text style={styles.detailText}>{props.complexity.toUpperCase()}</Text>
-                        <Text style={styles.detailText}>{props.affordability.toUpperCase()}</Text>
+                        <DefaultText>{props.duration}m</DefaultText>
+                        <DefaultText>{props.complexity.toUpperCase()}</DefaultText>
+                        <DefaultText>{props.affordability.toUpperCase()}</DefaultText>
                     </View>
                 </View>   
             </TouchableCmp>
@@ -59,9 +60,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: '15%'
-    },
-    detailText: {
-        color: 'white'
     },
     bgImage: {
         width: '100%',

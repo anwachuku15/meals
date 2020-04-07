@@ -4,7 +4,6 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import { MEALS } from '../data/dummy-data'
 import HeaderButton from '../components/HeaderButton'
-import { Header } from 'react-native/Libraries/NewAppScreen'
 
 const MealDetailScreen = props => {
     const mealId = props.navigation.getParam('mealId')
