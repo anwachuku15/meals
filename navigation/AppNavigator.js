@@ -154,7 +154,7 @@ const MainNavigator = createDrawerNavigator({
     contentOptions: {
         activeTintColor: 'magenta',
         labelStyle: {
-            // fontFamily: 'open-sans-bold'
+            fontFamily: 'open-sans-bold'
         }
     }
 })
