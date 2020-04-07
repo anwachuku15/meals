@@ -19,7 +19,6 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)
 
   if(!fontLoaded) {
-    console.log('not loaded')
     return (
       <AppLoading 
         startAsync={fetchFonts} 
@@ -27,8 +26,7 @@ export default function App() {
       />
     )
   } 
-  
-  return <AppNavigator fontLoaded={fontLoaded}/>
+  return <AppNavigator />
   
   
 }
