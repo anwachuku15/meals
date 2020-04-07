@@ -29,7 +29,7 @@ const defaultStackNavOptions = {
         fontFamily: 'open-sans'
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-    headerBackTitleVisible: true
+    headerBackTitleVisible: false
 }
 
 // MEALS STACK

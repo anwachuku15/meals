@@ -21,6 +21,7 @@ const MealItem = props => {
         <View style={styles.mealItem}>
             <TouchableCmp onPress={props.onSelectMeal}>
                 <View>
+                    {/* MEAL IMAGE */}
                     <View style={{...styles.mealRow, ...styles.mealHeader}}>
                         <ImageBackground source={{uri: props.image}} style={styles.bgImage}>   
                             <View style={styles.titleContainer}>
@@ -29,6 +30,7 @@ const MealItem = props => {
                         </ImageBackground>
                     </View>
 
+                    {/* MEAL DETAIL */}
                     <View style={{...styles.mealRow, ...styles.mealDetail, backgroundColor: props.primaryColor || props.favColor}}>
                         <DefaultText>{props.duration}m</DefaultText>
                         <DefaultText>{props.complexity.toUpperCase()}</DefaultText>
