@@ -16,5 +16,4 @@ const CustomHeaderButton = props => {
     )
 
 }
-
-export default CustomHeaderButton
+export default CustomHeaderButton 
