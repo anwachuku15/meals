@@ -16,7 +16,6 @@ const MealItem = props => {
     if (Platform.OS === 'android' && Platform.Version >= 21) {
         TouchableCmp = TouchableNativeFeedback
     }
-    
     return (
         <View style={styles.mealItem}>
             <TouchableCmp onPress={props.onSelectMeal}>
@@ -29,7 +28,7 @@ const MealItem = props => {
                         </ImageBackground>
                     </View>
 
-                    <View style={{...styles.mealRow, ...styles.mealDetail}}>
+                    <View style={{...styles.mealRow, ...styles.mealDetail, backgroundColor: props.primaryColor || props.favColor}}>
                         <Text style={styles.detailText}>{props.duration}m</Text>
                         <Text style={styles.detailText}>{props.complexity.toUpperCase()}</Text>
                         <Text style={styles.detailText}>{props.affordability.toUpperCase()}</Text>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     mealItem: {
         height: 200,
         width: '100%',
-        backgroundColor: Colors.primaryColor,
+        // backgroundColor: Colors.primaryColor,
         borderRadius: 10,
         overflow: 'hidden',
         marginVertical: 10

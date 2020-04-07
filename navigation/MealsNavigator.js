@@ -14,31 +14,50 @@ import FavoritesScreen from '../screens/FavoritesScreen'
 
 import Colors from '../constants/Colors'
 
+// DEFAULT STACK NAV OPTIONS
+const defaultStackNavOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+    },
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+    headerBackTitleVisible: false
+}
+
+// MEALS STACK NAVIGATION
 const MealsNavigator = createStackNavigator({
     Categories: {
-        screen: CategoriesScreen,
-        navigationOptions: {
-            headerTitle: 'Meal Categories',
-        }
-    },
+            screen: CategoriesScreen,
+            navigationOptions: {
+                headerTitle: 'Meal Categories',
+            }
+        },
     CategoryMeals: {
         screen: CategoryMealsScreen,
     },
     MealDetail: {
         screen: MealDetailScreen,
     },
-}, {
-    // mode: 'modal',
-    // initialRouteName: 'Categories',
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
-        },
-        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-        headerBackTitleVisible: false
+    }, {
+        defaultNavigationOptions: defaultStackNavOptions
     }
+)
+
+// FAVORITES STACK NAVIGATION
+const FavNavigator = createStackNavigator({
+    Favorites: {
+        screen: FavoritesScreen,
+        navigationOptions: {
+            headerTitle: 'Favorite Meals'
+        }
+    },
+    MealDetail: {
+        screen: MealDetailScreen
+    }
+}, {
+    defaultNavigationOptions: defaultStackNavOptions
 })
 
+// TAB CONFIG
 const tabScreenConfig = {
     Meals: {
         screen: MealsNavigator,
@@ -56,7 +75,7 @@ const tabScreenConfig = {
         }
     },
     Favorites: {
-        screen: FavoritesScreen,
+        screen: FavNavigator,
         navigationOptions: {
             // tabBarLabel: 'Favorites!',
             tabBarIcon: (tabInfo) => {
@@ -74,16 +93,19 @@ const tabScreenConfig = {
 
 }
 
+// BOTTOM TAB NAVIGATION
 const MealsFavTabNavigator = 
     Platform.OS === 'android' 
-        ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        ? createMaterialBottomTabNavigator(
+            tabScreenConfig, {
             activeColor: 'white',
             barStyle: {
                 backgroundColor: Colors.primaryColor
             },
             shifting: true,
         }) 
-        : createBottomTabNavigator(tabScreenConfig, {
+        : createBottomTabNavigator(
+            tabScreenConfig, {
             tabBarOptions: {
                 activeTintColor: Colors.primaryColor,
             }
