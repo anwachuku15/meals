@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, Text, } from 'react-native'
 import { createAppContainer} from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
@@ -22,8 +22,14 @@ const defaultStackNavOptions = {
     headerStyle: {
         backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
     },
+    headerTitleStyle: {
+        fontFamily: 'open-sans-bold'
+    },
+    headerBackTitleStyle: {
+        fontFamily: 'open-sans'
+    },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-    headerBackTitleVisible: false
+    headerBackTitleVisible: true
 }
 
 // MEALS STACK
@@ -74,7 +80,10 @@ const tabScreenConfig = {
                     />
                 )
             },
-            tabBarColor: Colors.primaryColor
+            tabBarColor: Colors.primaryColor,
+            tabBarLabel: Platform.OS === 'android' 
+                            ? <Text style={{fontFamily: 'open-sans-bold'}}>Meals</Text>
+                            : 'Meals'
         }
     },
     Favorites: {
@@ -90,7 +99,10 @@ const tabScreenConfig = {
                     />
                 )
             },
-            tabBarColor: Colors.secondaryColor
+            tabBarColor: Colors.secondaryColor,
+            tabBarLabel: Platform.OS === 'android' 
+                            ? <Text style={{fontFamily: 'open-sans-bold'}}>Favorites</Text>
+                            : 'Favorites'
         }
     }
 
@@ -110,6 +122,9 @@ const MealsFavTabNavigator =
         : createBottomTabNavigator(
             tabScreenConfig, {
             tabBarOptions: {
+                labelStyle: {
+                    fontFamily: 'open-sans-bold'
+                },
                 activeTintColor: Colors.primaryColor,
             }
         })
@@ -139,7 +154,7 @@ const MainNavigator = createDrawerNavigator({
     contentOptions: {
         activeTintColor: 'magenta',
         labelStyle: {
-            fontFamily: 'open-sans-bold'
+            // fontFamily: 'open-sans-bold'
         }
     }
 })

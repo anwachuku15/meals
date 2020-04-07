@@ -28,7 +28,7 @@ export default function App() {
     )
   } 
   
-  return <AppNavigator />
+  return <AppNavigator fontLoaded={fontLoaded}/>
   
   
 }
