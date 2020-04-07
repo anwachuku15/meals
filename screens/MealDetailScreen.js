@@ -28,7 +28,7 @@ MealDetailScreen.navigationOptions = (navigationData) => {
 
     return {
         headerTitle: displayedMeal.title,
-        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton} >
+        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
                         <Item 
                             title='Favorite' 
                             iconName='ios-heart-empty' 

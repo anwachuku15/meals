@@ -1,9 +1,11 @@
 import React from 'react'
 import { Platform } from 'react-native'
+import { createAppContainer} from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
-import { createAppContainer} from 'react-navigation'
+import { createDrawerNavigator } from 'react-navigation-drawer'
+
 import { Ionicons } from '@expo/vector-icons'
 
 
@@ -11,6 +13,7 @@ import CategoriesScreen from '../screens/CategoriesScreen'
 import CategoryMealsScreen from '../screens/CategoryMealsScreen'
 import MealDetailScreen from '../screens/MealDetailScreen'
 import FavoritesScreen from '../screens/FavoritesScreen'
+import FiltersScreen from '../screens/FiltersScreen'
 
 import Colors from '../constants/Colors'
 
@@ -23,7 +26,7 @@ const defaultStackNavOptions = {
     headerBackTitleVisible: false
 }
 
-// MEALS STACK NAVIGATION
+// MEALS STACK
 const MealsNavigator = createStackNavigator({
     Categories: {
             screen: CategoriesScreen,
@@ -42,7 +45,7 @@ const MealsNavigator = createStackNavigator({
     }
 )
 
-// FAVORITES STACK NAVIGATION
+// FAVORITES STACK
 const FavNavigator = createStackNavigator({
     Favorites: {
         screen: FavoritesScreen,
@@ -57,7 +60,7 @@ const FavNavigator = createStackNavigator({
     defaultNavigationOptions: defaultStackNavOptions
 })
 
-// TAB CONFIG
+// TAB CONFIG - Includes Meals Stack & Favorites Stack
 const tabScreenConfig = {
     Meals: {
         screen: MealsNavigator,
@@ -111,4 +114,18 @@ const MealsFavTabNavigator =
             }
         })
 
-export default createAppContainer(MealsFavTabNavigator) 
+// FILTERS STACK (just to use navigationOptions ])
+const FiltersNavigator = createStackNavigator({
+    Filters: {
+        screen: FiltersScreen,
+    }
+})
+
+// MAIN DRAWER NAVIGATION
+const MainNavigator = createDrawerNavigator({
+    MealsFav: MealsFavTabNavigator,
+    Filters: FiltersNavigator
+})
+
+
+export default createAppContainer(MainNavigator) 
