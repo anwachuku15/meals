@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+
 import { Text, View } from 'react-native';
+
+import { Provider } from 'react-redux'
+import store from './redux/store';
+
 // import * as Font from 'expo-font'
 import { useFonts } from '@use-expo/font'
 import { AppLoading } from 'expo'
 import { enableScreens } from 'react-native-screens'
 
 import AppNavigator from './navigation/AppNavigator'
+
 
 enableScreens()
 
@@ -26,7 +32,11 @@ export default function App() {
   if(!fontsLoaded) {
     return <AppLoading />
   } else {
-    return <AppNavigator />
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    )
   }
   
 }

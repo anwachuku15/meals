@@ -23,15 +23,17 @@ const FavoritesScreen = props => {
 FavoritesScreen.navigationOptions = (navData) => {
     return {
         headerTitle: 'Favorite Meals',
-        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                        <Item 
-                            title='Menu' 
-                            iconName='ios-menu' 
-                            onPress={() => {
-                                navData.navigation.toggleDrawer()
-                            }} 
-                        />
-                    </HeaderButtons>
+        headerLeft: () =>  (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item 
+                    title='Menu' 
+                    iconName='ios-menu' 
+                    onPress={() => {
+                        navData.navigation.toggleDrawer()
+                    }} 
+                />
+            </HeaderButtons>
+        )
     }             
 }
 
