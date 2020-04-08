@@ -6,7 +6,10 @@ import {
     ScrollView,
     Image, 
 } from 'react-native'
-import { useSelector } from 'react-redux'
+// REDUX
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleFavorite } from '../redux/actions/meals'
+
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 // import { MEALS } from '../data/dummy-data'
@@ -26,35 +29,22 @@ const MealDetailScreen = props => {
     const availableMeals = useSelector(state => state.meals.meals)
     const mealId = props.navigation.getParam('mealId')
     const selectedMeal = availableMeals.find(meal => meal.id === mealId)
+    const [isFavorite, setIsFavorite] = useState(false)
 
-    const [isFavorited, setIsFavorited] = useState(false)
-
-    const addFav = useCallback(() => {
-        if (!isFavorited) {
-            console.log(selectedMeal.title + ' was favorited')
-        }
-        setIsFavorited(!isFavorited)
-    }, [isFavorited])
+    const dispatch = useDispatch()
+    
+    const toggleFavHandler = useCallback(() => {
+        dispatch(toggleFavorite(mealId))
+        setIsFavorite(!isFavorite)
+    }, [dispatch, mealId, isFavorite])
+    
     
     useEffect(() => {
-        props.navigation.setParams({addFav: addFav})
-        if (!isFavorited) {
-            console.log(selectedMeal.title + ' is not favorited')
-        }
-    }, [addFav])
-    
-    /* 
-    useEffect(() => { 
-        props.navigation.setParams({mealTitle: selectedMeal.title})
-    }, [selectedMeal])
-    useEffect: pass Redux data to Navigation Options when selectedMeal changes (dependency)
-    
-    NOTE: useEffect will cause UI latency in this case 
-          because it will display the mealTitle header after
-          the component fully renders
-    UI Latency Solution: pass mealTitle when user selects meal on 
-                         CategoryMealsScreen and/or FavScreen (MealList.js)
-    */
+        props.navigation.setParams({
+            toggleFav: toggleFavHandler,
+            isFavorite: isFavorite
+        })
+    }, [toggleFavHandler])
 
     return (
         <ScrollView>
@@ -85,7 +75,8 @@ const MealDetailScreen = props => {
 MealDetailScreen.navigationOptions = (navData) => {
     const mealId = navData.navigation.getParam('mealId')
     const mealTitle = navData.navigation.getParam('mealTitle')
-    // const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    const isFavorite = navData.navigation.getParam('isFavorite')
+    const toggleFavorite = navData.navigation.getParam('toggleFav')
 
     return {
         // headerTitle: mealTitle,
@@ -93,9 +84,8 @@ MealDetailScreen.navigationOptions = (navData) => {
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item 
                     title='Favorite' 
-                    iconName='ios-heart-empty' 
-                    // onPress={() => {console.log('mark as favorite')}}
-                    onPress={navData.navigation.getParam('addFav')}
+                    iconName={!isFavorite ? 'ios-heart-empty' : 'ios-heart' }
+                    onPress={toggleFavorite}
                 />
             </HeaderButtons>
         )
