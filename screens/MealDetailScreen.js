@@ -29,21 +29,20 @@ const MealDetailScreen = props => {
     const availableMeals = useSelector(state => state.meals.meals)
     const favMeals = useSelector(state => state.meals.favoriteMeals)
     const mealId = props.navigation.getParam('mealId')
+
     const selectedMeal = availableMeals.find(meal => meal.id === mealId)
-    const [isFavorite, setIsFavorite] = useState(false)
     
     /* Sets heart icon depending on global favorites state  */
     useEffect(() => {
         props.navigation.setParams({
-            icon: favMeals.indexOf(selectedMeal) >= 0 ? 'ios-heart' : 'ios-heart-empty'
+            isFavorite: favMeals.indexOf(selectedMeal) >= 0
         })
     }, [favMeals])
 
     const dispatch = useDispatch()
     const toggleFavHandler = useCallback(() => {
         dispatch(toggleFavorite(mealId))
-        setIsFavorite(!isFavorite)
-    }, [dispatch, mealId, isFavorite])
+    }, [dispatch, mealId])
     
     
     useEffect(() => {
@@ -79,17 +78,17 @@ const MealDetailScreen = props => {
 }
 
 MealDetailScreen.navigationOptions = (navData) => {
-    const mealId = navData.navigation.getParam('mealId')
     const mealTitle = navData.navigation.getParam('mealTitle')
     const toggleFavorite = navData.navigation.getParam('toggleFav')
-    const icon = navData.navigation.getParam('icon')
+    const isFavorite = navData.navigation.getParam('isFavorite')
     return {
         headerTitle: mealTitle,
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item 
                     title='Favorite' 
-                    iconName={icon}
+                    // iconName={icon}
+                    iconName={isFavorite ? 'ios-heart' : 'ios-heart-empty'}
                     onPress={toggleFavorite}
                 />
             </HeaderButtons>
