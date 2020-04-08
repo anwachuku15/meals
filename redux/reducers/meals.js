@@ -4,7 +4,7 @@ import { TOGGLE_FAVORITE } from '../actions/meals';
 const initialState = {
     meals: MEALS,
     filteredMeals: MEALS,
-    favoriteMeals: []
+    favoriteMeals: [],
 }
 
 const mealsReducer = (state = initialState, action) => {
@@ -16,17 +16,16 @@ const mealsReducer = (state = initialState, action) => {
                 updatedFavMeals.splice(existingIndex, 1)
                 return {
                     ...state,
-                    favoriteMeals: updatedFavMeals
+                    favoriteMeals: updatedFavMeals,
                 }
             } else {
                 const meal = state.meals.find(meal => meal.id === action.mealId)
                 return {
                     ...state,
-                    // favoriteMeals: state.favoriteMeals.concat(meal)
                     favoriteMeals: [
                         meal,
                         ...state.favoriteMeals
-                    ]
+                    ],
                 }
             }
         default:
