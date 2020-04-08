@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { 
     View, 
     Text, 
@@ -27,6 +27,35 @@ const MealDetailScreen = props => {
     const mealId = props.navigation.getParam('mealId')
     const selectedMeal = availableMeals.find(meal => meal.id === mealId)
 
+    const [isFavorited, setIsFavorited] = useState(false)
+
+    const addFav = useCallback(() => {
+        if (!isFavorited) {
+            console.log(selectedMeal.title + ' was favorited')
+        }
+        setIsFavorited(!isFavorited)
+    }, [isFavorited])
+    
+    useEffect(() => {
+        props.navigation.setParams({addFav: addFav})
+        if (!isFavorited) {
+            console.log(selectedMeal.title + ' is not favorited')
+        }
+    }, [addFav])
+    
+    /* 
+    useEffect(() => { 
+        props.navigation.setParams({mealTitle: selectedMeal.title})
+    }, [selectedMeal])
+    useEffect: pass Redux data to Navigation Options when selectedMeal changes (dependency)
+    
+    NOTE: useEffect will cause UI latency in this case 
+          because it will display the mealTitle header after
+          the component fully renders
+    UI Latency Solution: pass mealTitle when user selects meal on 
+                         CategoryMealsScreen and/or FavScreen (MealList.js)
+    */
+
     return (
         <ScrollView>
             <Image source={{uri: selectedMeal.imageUrl}} style={styles.image} />
@@ -53,21 +82,23 @@ const MealDetailScreen = props => {
     )
 }
 
-MealDetailScreen.navigationOptions = (navigationData) => {
-    const mealId = navigationData.navigation.getParam('mealId')
-    const selectedMeal = MEALS.find(meal => meal.id === mealId)
+MealDetailScreen.navigationOptions = (navData) => {
+    const mealId = navData.navigation.getParam('mealId')
+    const mealTitle = navData.navigation.getParam('mealTitle')
+    // const selectedMeal = MEALS.find(meal => meal.id === mealId)
 
     return {
-        headerTitle: selectedMeal.title,
-        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                        <Item 
-                            title='Favorite' 
-                            iconName='ios-heart-empty' 
-                            onPress={() => {
-                                console.log('mark as favorite')
-                            }} 
-                        />
-                     </HeaderButtons>
+        // headerTitle: mealTitle,
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item 
+                    title='Favorite' 
+                    iconName='ios-heart-empty' 
+                    // onPress={() => {console.log('mark as favorite')}}
+                    onPress={navData.navigation.getParam('addFav')}
+                />
+            </HeaderButtons>
+        )
     }
 }
 
